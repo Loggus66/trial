@@ -1,0 +1,9 @@
+---
+
+- name: String compression
+  gather_facts: false
+  hosts: localhost
+  tasks:
+    - name: Template lookup
+      debug:
+        msg: "{{ lookup('template', 'loop.j2').split('\n') }}"

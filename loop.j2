@@ -1,0 +1,44 @@
+{% set lst = [string] %}
+{# https://stackoverflow.com/questions/7537439/how-to-increment-a-variable-on-a-for-loop-in-jinja-template #}
+{# So basically variable scope shenanigans #}
+{% set counter = namespace(value=1) %}
+{% set iterator = 1 %}
+{% set size = string | count %}
+{{ size }}
+{{ counter }}
+{{ iterator }}
+
+loop start
+{% for letter in string %}
+{{ counter.value }}
+
+{# loop before the last loop #}
+{% if loop.nextitem is defined %}
+
+{# same group counter #}
+{% if loop.nextitem == letter %}
+{% set counter.value = counter.value + 1 %}
+{% endif %}
+{# end same group loop#}
+
+{# new group counter #}
+{% if loop.nextitem != letter %}
+{{ letter }}{{ counter.value }}
+{% set counter.value = 1 %}
+{% endif %}
+{# end new group counter #}
+{% endif %}
+
+{# last loop #}
+{% if loop.nextitem is undefined %}
+{% if loop.previtem == letter %}
+{% set counter.value = counter.value + 1 %}
+{% endif %}
+{% if loop.previtem != letter %}
+{{ letter }}{{ counter.value }}
+{% set counter.value = 1 %}
+{% endif %}
+{% endif %}
+{% endfor %}
+loop end
+
