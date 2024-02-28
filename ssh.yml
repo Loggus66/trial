@@ -1,0 +1,26 @@
+---
+
+- name: User tasks
+  gather_facts: false
+  hosts: localhost
+  become: yes
+  vars:
+    user:
+      name: user
+  tasks:
+    - name: User creation
+      user:
+        name: "{{ user.name }}"
+        password: '$y$j9T$wmCxP4ToZXrImjcjYW7Ed1$wEKotLTbgvmupoWassHbCqkk9NLJJRO5gCQJI4CP7AA'
+    - name: Empty sudo for "{{ user.name }}"
+      file:
+        path: "/etc/sudoers.d/{{ user.name }}"
+        state: touch
+        owner: root
+        group: root
+        mode: 0640
+    - name: Populate sudo for "{{ user.name }}"
+      lineinfile:
+        path: "/etc/sudoers.d/{{ user.name }}"
+        line: "{{ user.name }} ALL=(ALL) NOPASSWD: ALL"
+
