@@ -4,7 +4,7 @@ ansible-playbook -i localhost --extra-vars='{"string": "AAAAABBDCAAADDDDBC"}' st
 
 and
 
-ansible-playbook -i <remote-ip>, ssh.yml
+ansible-playbook -i \<remote-ip\>, ssh.yml
 
 or
 
