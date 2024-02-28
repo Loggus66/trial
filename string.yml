@@ -6,4 +6,4 @@
   tasks:
     - name: Template lookup
       debug:
-        msg: "{{ lookup('template', 'loop.j2').split('\n') }}"
+        msg: "{{ lookup('template', 'loop.j2') | replace('\n', '') }}"
